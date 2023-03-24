@@ -16,11 +16,11 @@ const config = {
   clientID: process.env.AUTH0_ID,
   issuerBaseURL: process.env.AUTH0_ISSUER_BASEURL
 };
-
 // auth router attaches /login, /logout, and /callback routes to the baseURL
 app.use(auth(config));
 
 
+// Home route for Platform
 app.get("/", (req, res) => {
     
   let loggedIn = req.oidc.isAuthenticated() ? true : false; 
@@ -32,15 +32,9 @@ app.get("/", (req, res) => {
     
 })
 
+// dashboard route with Auth Middle ware
 app.get("/dashboard", requiresAuth(),(req, res) => {
   let loggedIn = req.oidc.isAuthenticated() ? true : false; 
-  
-  // if (!loggedIn) {
-  //   res.redirect("/")
-  //   return;
-  // }
-
-  
   let user = req.oidc.user
 
   console.log(JSON.stringify((user)))
