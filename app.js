@@ -1,9 +1,10 @@
 const express = require('express')
 require('dotenv').config()
+const os = require('os')
 
 const app = express()
 const port = process.env.PORT || 3000
-const { auth } = require('express-openid-connect');
+const { auth, requiresAuth } = require('express-openid-connect');
 
 app.set('view engine', 'ejs');
 
@@ -20,11 +21,36 @@ const config = {
 app.use(auth(config));
 
 
-
-
-
 app.get("/", (req, res) => {
-    res.send("Welcom to mdev 1004")
+    
+  let loggedIn = req.oidc.isAuthenticated() ? true : false; 
+
+  res.render('Home', {
+    title : "Assignment4_MDEV_1004",
+    loggedIn : loggedIn
+  })
+    
+})
+
+app.get("/dashboard", requiresAuth(),(req, res) => {
+  let loggedIn = req.oidc.isAuthenticated() ? true : false; 
+  
+  // if (!loggedIn) {
+  //   res.redirect("/")
+  //   return;
+  // }
+
+  
+  let user = req.oidc.user
+
+  console.log(JSON.stringify((user)))
+  
+  res.render('Dashboard', {
+    title : "Assignment4_MDEV_1004",
+    loggedIn : loggedIn,
+    user : user
+  })
+
 })
 
 app.listen(port, () => {

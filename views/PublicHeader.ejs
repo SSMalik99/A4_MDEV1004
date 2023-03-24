@@ -1,0 +1,19 @@
+<nav class="navbar navbar-light bg-dark">
+    <div class="container-fluid">
+      <a href="/" class="navbar-brand text-white fw-bold">
+        <img src="https://www.linkpicture.com/q/Assignmetn-Shodwe.png" alt="" width="30" height="24">
+        MDEV_1004
+        </a>
+      <div class="d-flex">
+
+        <% if (loggedIn) { %>
+            <a href="/dashboard" class="btn btn-outline-primary text-white fw-bold">Dashboard</a>
+            
+        <%} else { %>
+            <a href="/login" class="btn btn-outline-primary text-white fw-bold">Log In / Register</a>
+        <% } %>
+        
+        
+      </div>
+    </div>
+  </nav>
